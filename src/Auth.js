@@ -7,6 +7,7 @@ class Auth extends Component {
   }
 
   login = (e = null) => {
+    console.log("login")
     if (e) e.preventDefault()
     const me = {
       email: "test@test.com",
@@ -22,11 +23,21 @@ class Auth extends Component {
   }
 
   logout = (e = null) => {
-    
+    if (e) e.preventDefault()
+    localStorage.setItem('me', null)
+    this.setState({ 
+      me: null,
+      isLoggedIn: false
+    });
   }
   
   render() {
-    return this.props.children()
+    const props = {
+      login: this.login,
+      logout: this.logout,
+      ...this.state
+    }
+    return this.props.children(props)
   }
 }
 
